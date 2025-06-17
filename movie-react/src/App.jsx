@@ -8,7 +8,7 @@ const Card = ({title}) => {
     
     <div className='card'>
     <h2> {title}</h2>
-    <button onClick= {() => sethasLiked(true)}>
+    <button onClick= {() => sethasLiked(!hasLiked)}>
     {hasLiked ? "Liked": "Like"}
 
     </button>
