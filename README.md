@@ -1,7 +1,7 @@
 <div align="center">
   <br />
     <a target="_blank">
-      <img src="public/readme/hero.png" alt="Project Banner">
+      <img src="hero.png" alt="Project Banner">
     </a>
   <br />
   
@@ -21,10 +21,7 @@
 1. 🤖 [Introduction](#introduction)
 2. ⚙️ [Tech Stack](#tech-stack)
 3. 🔋 [Features](#features)
-4. 🤸 [Quick Start](#quick-start)
-5. 🕸️ [Snippets (Code to Copy)](#snippets)
-6. 🔗 [Assets](#links)
-7. 🚀 [More](#more)
+
 
 
 ## <a name="introduction">🤖 Introduction</a>
