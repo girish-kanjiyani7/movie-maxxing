@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import Search from './components/Search';
+import Spinner from './components/Spinner';
+import MovieCard from './components/moviecard';
+import {useDebounce} from 'react-use'
 
 const API_BASE_URL = 'https://api.themoviedb.org/3';
 const API_KEY = import.meta.env.VITE_TMDB_API_KEY;
@@ -15,12 +18,16 @@ const App = () => {
     const [errorMessage, seterrorMessage] = useState('');
     const [movieList, setMovieList] = useState([]);
     const [isLoading, setisLoading] = useState(false);
+    const [debouncesearchitem, setdebouncesearchitem] = useState('');
 
-    const fetchMovies = async() => {
+    useDebounce(() => setdebouncesearchitem(searchitem), 500,[searchitem] )
+
+    const fetchMovies = async(query = '') => {
       setisLoading(true);
       seterrorMessage('');
       try{
-        const endpoint = `${API_BASE_URL}/discover/movie?sort_by=popularity.desc`;
+        const endpoint = query? `${API_BASE_URL}/search/movie?query=${encodeURI(query)}`
+                          :`${API_BASE_URL}/discover/movie?sort_by=popularity.desc`;
         const response = await fetch (endpoint, API_OPTIONS);
         
 
@@ -42,13 +49,11 @@ const App = () => {
       finally{
         setisLoading(false);
       }
-    }
-
-
+   }
 
     useEffect(() => {
-      fetchMovies();
-    }, []);
+      fetchMovies(debouncesearchitem);
+    }, [debouncesearchitem]);
 
 
 
@@ -65,14 +70,14 @@ const App = () => {
 
         <Search searchitem={searchitem} setsearchitem={setsearchitem}  />
         <section className='all-movies'>
-          <h2>All movies</h2>
+          <h2 className='mt-[40px]'>All movies</h2>
           { isLoading ? (
-            <p className='text-white'>Loading...</p>
+            <Spinner/>
           ) :errorMessage ? (
             <p className='text-red-500'>{errorMessage}</p>
           ):(
             <ul>{movieList.map((movie)=>(
-              <p key={movie.id}className='text-white'>{movie.title}</p>
+              <MovieCard key={movie.id} movie={movie}/>
             ))}</ul>
           )}
         </section>
