@@ -11,6 +11,7 @@ const API_OPTIONS = {
   headers:{
     accept: 'application/json',
     Authorization: `Bearer ${API_KEY}`
+    
   }
 }
 const App = () => {
